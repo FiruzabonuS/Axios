@@ -4,11 +4,15 @@ import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
 
 export default function UserScreen() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/users/').then(res => {
-      setData(res.data);
-    });
+    axios
+      .get('https://jsonplaceholder.typicode.com/users/')
+      .then(res => {
+        setData(res.data);
+      })
+      .catch(err => setError(err.message));
   });
   return (
     <View style={styles.container}>
@@ -22,6 +26,8 @@ export default function UserScreen() {
           );
         }}
       />
+
+      {error && <Text>{error}</Text>}
     </View>
   );
 }

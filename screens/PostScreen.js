@@ -4,11 +4,17 @@ import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
 
 export default function PostScreen() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts/').then(res => {
-      setData(res.data);
-    });
+    axios
+      .get('https://jsonplaceholder.typicode.com/posts/')
+      .then(res => {
+        setData(res.data);
+      })
+      .catch(err => {
+        setError(err.message);
+      });
   });
   return (
     <View style={styles.container}>
@@ -23,6 +29,7 @@ export default function PostScreen() {
           );
         }}
       />
+      {error && <Text>{error}</Text>}
     </View>
   );
 }
