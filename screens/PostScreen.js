@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
 
-export default function PostScreen() {
+export default function PostScreen({navigation}) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -23,7 +23,11 @@ export default function PostScreen() {
         data={data}
         renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.textContainer}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('PostRoute', {texts: item.body})
+              }
+              style={styles.textContainer}>
               <Text>{item.title}</Text>
             </TouchableOpacity>
           );

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, FlatList, View, Text, TouchableOpacity} from 'react-native';
 
-export default function UserScreen() {
+export default function UserScreen({navigation}) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -20,7 +20,11 @@ export default function UserScreen() {
         data={data}
         renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.textContainer}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('UserRoute', {texts: item.email})
+              }
+              style={styles.textContainer}>
               <Text>{item.name}</Text>
             </TouchableOpacity>
           );
